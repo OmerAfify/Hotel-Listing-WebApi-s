@@ -43,6 +43,7 @@ namespace HotelListing.APIs
 
         // GET: api/<HotelApiController>/id
         [HttpGet("{id:int}")]
+        
         public async Task<IActionResult> GetHotelById(int id)
         {
             try

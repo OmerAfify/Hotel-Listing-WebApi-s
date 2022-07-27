@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HotelListing.DTOs;
 using HotelListing.Interfaces;
+using HotelListing.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,7 +42,10 @@ namespace HotelListing.APIs
 
 
         // GET: api/<CountryApiController>/id
+
+       // [Authorize]
         [HttpGet("{id:int}")]
+
         public async Task<IActionResult> GetCountryById(int id)
         {
             try
@@ -53,7 +58,6 @@ namespace HotelListing.APIs
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }
-
 
 
     }

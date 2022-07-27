@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HotelListing.Business_Services;
+using HotelListing.Data;
 using HotelListing.Helpers;
 using HotelListing.Interfaces;
 using HotelListing.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,26 +36,41 @@ namespace HotelListing
           .CreateLogger();
         }
 
-    
+
         public void ConfigureServices(IServiceCollection services)
         {
 
-            // Db conn string + DI
-            services.AddDbContext<ApplicationDbContext>
-              (options => options.UseSqlServer(Configuration.GetConnectionString("sqlServerConnection")));
+            //Identity
+                services.AddIdentity<MyIdentityUser, IdentityRole>(options =>
+                {
+                  options.User.RequireUniqueEmail = true;
+
+                }).AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
+
+                services.AddAuthentication();
+                services.AddAuthentication();
 
 
-            services.AddScoped<ICountryServices, CountrySevices>();
-            services.AddScoped<IHotelServices, HotelServices>();
+           // Db conn string + DI
+                services.AddDbContext<ApplicationDbContext>
+                  (options => options.UseSqlServer(Configuration.GetConnectionString("sqlServerConnection")));
+
+                services.AddScoped<ICountryServices, CountrySevices>();
+                services.AddScoped<IHotelServices, HotelServices>();
 
 
+            // Mapper 
+                services.AddAutoMapper(typeof(ApplicationMapper));
 
-            services.AddAutoMapper(typeof(ApplicationMapper));
 
-
-            services.AddControllers().AddNewtonsoftJson(opt=>
-                  opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //JSON self refrencing config 
+                services.AddControllers().AddNewtonsoftJson(opt=>
+                      opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
       
+            
+            //Swagger config
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelListing", Version = "v1" });
