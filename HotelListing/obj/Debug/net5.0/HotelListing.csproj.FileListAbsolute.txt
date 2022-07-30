@@ -77,3 +77,4 @@ D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

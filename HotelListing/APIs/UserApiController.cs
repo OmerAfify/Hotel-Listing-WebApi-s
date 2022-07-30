@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using HotelListing.Data;
 using HotelListing.DTOs;
-using Microsoft.AspNetCore.Http;
+using HotelListing.Interfaces.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+
 
 namespace HotelListing.APIs
 {
@@ -18,13 +18,23 @@ namespace HotelListing.APIs
 
         private UserManager<MyIdentityUser> _userManager { get; }
         private SignInManager<MyIdentityUser> _signInManager { get; }
+        private IUserAuthenticationManager _userAuthenticationManager { get; }
         private IMapper _mapper { get; }
 
-        public UserApiController(   UserManager<MyIdentityUser> userManager,SignInManager<MyIdentityUser> signInManager ,IMapper mapper )
+        private IConfiguration _configuration;
+       
+        public UserApiController(UserManager<MyIdentityUser> userManager,
+            SignInManager<MyIdentityUser> signInManager ,
+            IUserAuthenticationManager userAuthenticationManager,
+            IMapper mapper,
+            IConfiguration configuration
+          )
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userAuthenticationManager = userAuthenticationManager;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
 
@@ -97,6 +107,41 @@ namespace HotelListing.APIs
             }
 
         }
+
+
+
+        [HttpPost]
+        [Route("loginWithJWT")]
+        public async Task<IActionResult> LoginWithJWT([FromBody] LoginUserDto userDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+
+                if (await _userAuthenticationManager.ValidateUser(userDTO) == true)
+                {
+                    return Accepted(new { Token = await _userAuthenticationManager.CreateToken() });
+                }
+                else
+                {
+                    return Unauthorized(userDTO);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Problem($"Something went wrong in {nameof(LoginWithJWT)} error is {ex.Message}", statusCode: 500);
+            }
+
+        }
+
+
+      
+
 
     }
 }

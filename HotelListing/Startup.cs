@@ -1,96 +1,120 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using HotelListing.Business_Services;
 using HotelListing.Data;
 using HotelListing.Helpers;
 using HotelListing.Interfaces;
+using HotelListing.Interfaces.IServices;
 using HotelListing.Models;
+using HotelListing.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Serilog;
+using System;
+using System.Text;
 
 namespace HotelListing
 {
     public class Startup
     {
+        
         public IConfiguration Configuration { get; }
-
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-           Log.Logger = new LoggerConfiguration()
-          .ReadFrom.Configuration(configuration)
-          .CreateLogger();
         }
-
-
+   
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //Identity
-                services.AddIdentity<MyIdentityUser, IdentityRole>(options =>
+            services.AddDbContext<ApplicationDbContext>
+                 (options => options.UseSqlServer(Configuration.GetConnectionString("sqlServerConnection")));
+
+
+            //Identity  
+            services.AddIdentity<MyIdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            //Authentication  
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>         // Adding Jwt Bearer config
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                  options.User.RequireUniqueEmail = true;
-
-                }).AddEntityFrameworkStores<ApplicationDbContext>()
-                    .AddDefaultTokenProviders();
-
-                services.AddAuthentication();
-                services.AddAuthentication();
-
-
-           // Db conn string + DI
-                services.AddDbContext<ApplicationDbContext>
-                  (options => options.UseSqlServer(Configuration.GetConnectionString("sqlServerConnection")));
-
-                services.AddScoped<ICountryServices, CountrySevices>();
-                services.AddScoped<IHotelServices, HotelServices>();
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true, //
+                    ValidateLifetime = true, //
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+               
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SecretTokenKeyValue")))
+                };
+            });
 
 
-            // Mapper 
-                services.AddAutoMapper(typeof(ApplicationMapper));
+            ////cors
+            //services.AddCors(o => {
+            //    o.AddPolicy("AllowAll", builder =>
+            //        builder.AllowAnyOrigin()
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader());
+            //});
 
 
-            //JSON self refrencing config 
-                services.AddControllers().AddNewtonsoftJson(opt=>
-                      opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-      
-            
-            //Swagger config
-            
+            //AutoMapper
+            services.AddAutoMapper(typeof(ApplicationMapper));
+
+
+            //Dependency Injection config 
+            services.AddScoped<ICountryServices, CountrySevices>();
+            services.AddScoped<IHotelServices, HotelServices>();
+            services.AddScoped<IUserAuthenticationManager, UserAuthenticationManager>();
+
+
+            //Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelListing", Version = "v1" });
             });
+
+            //Controllers + refrence loop handling 
+            services.AddControllers().AddNewtonsoftJson(op =>
+                op.SerializerSettings.ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
         }
 
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+          public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelListing v1"));
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelListing v1"));
 
             app.UseHttpsRedirection();
 
+            app.UseCors("AllowAll");
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -100,3 +124,5 @@ namespace HotelListing
         }
     }
 }
+
+

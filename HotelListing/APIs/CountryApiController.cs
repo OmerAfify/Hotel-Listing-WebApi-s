@@ -7,6 +7,7 @@ using HotelListing.DTOs;
 using HotelListing.Interfaces;
 using HotelListing.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ namespace HotelListing.APIs
 {
     [Route("api/[controller]")]
     [ApiController]
+ 
     public class CountryApiController : ControllerBase
     {
         private ICountryServices _countryServices { get; }
@@ -27,7 +29,10 @@ namespace HotelListing.APIs
 
 
         // GET: api/<CountryApiController>
+  
         [HttpGet]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+      
         public async Task<IActionResult> GetAllCountries()
         {
             try{
@@ -42,10 +47,11 @@ namespace HotelListing.APIs
 
 
         // GET: api/<CountryApiController>/id
-
-       // [Authorize]
+      
+   
         [HttpGet("{id:int}")]
-
+      [ProducesResponseType(StatusCodes.Status200OK)]
+      [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCountryById(int id)
         {
             try
