@@ -42,14 +42,31 @@ namespace HotelListing.Business_Services
             return await _context.countries.Where(c => c.countryId == id).FirstOrDefaultAsync();
         }
 
+        public async void AddCountryAsync(Country country)
+        {
+            await _context.countries.AddAsync(country);
+            _context.SaveChanges();
+        }
 
+        public void UpdateCountry(Country country)
+        {
+            _context.Attach(country);
+            _context.Entry(country).State = EntityState.Modified;
+            _context.SaveChanges();
 
-      
+        }
 
+        public void DeleteCountry(int id)
+        {
+            var country = _context.countries.Where(c => c.countryId == id).FirstOrDefault();
 
+            if (country == null)
+                return;
 
+            _context.Attach(country);
+            _context.Remove(country);
 
-
-
+            _context.SaveChanges();
+        }
     }
 }

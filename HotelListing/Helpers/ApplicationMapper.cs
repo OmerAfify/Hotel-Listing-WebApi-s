@@ -15,6 +15,10 @@ namespace HotelListing.Helpers
         {
             CreateMap<Country, CountryDTO>().ReverseMap();
 
+            CreateMap<Country, CreateCountryDTO>().ReverseMap();
+
+            CreateMap<Country, UpdateCountryDTO>().ReverseMap();
+
             CreateMap<Hotel, HotelDTO>().ReverseMap();
 
             CreateMap<MyIdentityUser, UserDTO>().ReverseMap();

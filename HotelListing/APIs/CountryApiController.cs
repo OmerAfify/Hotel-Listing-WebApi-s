@@ -15,7 +15,7 @@ namespace HotelListing.APIs
 {
     [Route("api/[controller]")]
     [ApiController]
- 
+
     public class CountryApiController : ControllerBase
     {
         private ICountryServices _countryServices { get; }
@@ -29,17 +29,14 @@ namespace HotelListing.APIs
 
 
         // GET: api/<CountryApiController>
-  
         [HttpGet]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-      
         public async Task<IActionResult> GetAllCountries()
         {
-            try{
+            try {
                 var countries = await _countryServices.GetAllCountriesAsync();
                 return Ok(_mapper.Map<List<CountryDTO>>(countries));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message + "Internal server error");
             }
@@ -47,11 +44,8 @@ namespace HotelListing.APIs
 
 
         // GET: api/<CountryApiController>/id
-      
-   
-        [HttpGet("{id:int}")]
-      [ProducesResponseType(StatusCodes.Status200OK)]
-      [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+        [HttpGet("{id:int}", Name = "GetCountry")]
         public async Task<IActionResult> GetCountryById(int id)
         {
             try
@@ -65,6 +59,98 @@ namespace HotelListing.APIs
             }
         }
 
+        // POST : api/<CountryApiController>
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpPost]
+        public IActionResult AddCountry([FromBody] CreateCountryDTO countryDTO)
+        {
+
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var NewCountry = _mapper.Map<Country>(countryDTO);
+
+                _countryServices.AddCountryAsync(NewCountry);
+
+                return CreatedAtRoute("GetCountry", new { id = NewCountry.countryId }, NewCountry);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message + "Internal server error");
+            }
+        }
+
+
+
+        // PUT : api/<CountryApiController>/id
+        [Authorize(Roles ="ADMIN")]
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateCountry([FromBody] UpdateCountryDTO countryDTO, int id)
+        {
+
+            if (!ModelState.IsValid || id < 1)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var country =  _countryServices.GetCountryById(id);
+
+                if (country == null)
+                {
+                    return BadRequest();
+                }
+
+                 _mapper.Map(countryDTO, country);
+                 _countryServices.UpdateCountry(country);
+
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message + "Internal server error");
+            }
+        }
+
+
+        // Delete : api/<CountryApiController>/id
+        [Authorize(Roles = "ADMIN")]
+        [HttpDelete("{id:int}")]
+        public IActionResult RemoveCountry(int id)
+        {
+
+            if (!ModelState.IsValid || id < 1)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var country =  _countryServices.GetCountryById(id);
+
+                if (country == null)
+                {
+                    return BadRequest("Country Not Found, Please enter a valid Id");
+                }
+
+                 _countryServices.DeleteCountry(id);
+
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message + "Internal server error");
+            }
+        }
 
     }
 }

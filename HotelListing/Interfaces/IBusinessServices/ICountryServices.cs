@@ -16,6 +16,10 @@ namespace HotelListing.Interfaces
         // Async Methods Section
         public Task<Country> GetCountryByIdAsync(int id);
         public Task<IEnumerable<Country>> GetAllCountriesAsync();
+        public void AddCountryAsync(Country country);
+        public void UpdateCountry(Country country);
+        public void DeleteCountry(int id);
+
     }
 
 }

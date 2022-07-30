@@ -76,8 +76,7 @@ namespace HotelListing.Services
             var claims = new List<Claim>
              {
                  new Claim(ClaimTypes.Name, _user.UserName),
-                 //new line
-              //  new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+    
              };
 
             var roles = await _userManager.GetRolesAsync(_user);

@@ -5,11 +5,23 @@ using System.Threading.Tasks;
 
 namespace HotelListing.DTOs
 {
-    public class CountryDTO
+
+    public class CreateCountryDTO
     {
-        public int countryId { get; set; }
         public string countryName { get; set; }
         public string countryShortName { get; set; }
 
     }
+    
+    public class CountryDTO : CreateCountryDTO
+    {
+        public int countryId { get; set; }
+
+    }
+    public class UpdateCountryDTO : CreateCountryDTO
+    {
+     
+
+    }
+
 }
