@@ -29,11 +29,11 @@ namespace HotelListing.APIs
 
         // GET: api/<HotelApiController>
         [HttpGet]
-        public async Task<IActionResult> GetAllHotels()
+        public async Task<IActionResult> GetAllHotels([FromQuery] RequestParams requestParams)
         {
             try
             {
-                var hotels = await _hotelServices.GetAllHotelsAsync();
+                var hotels = await _hotelServices.GetAllHotelsAsync(requestParams);
                 return Ok(_mapper.Map<List<HotelDTO>>(hotels));
             }
             catch (Exception ex)

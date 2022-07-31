@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "kI6ohKnqUvAE4XJDVnvZw8j4zxZYG9ZN+ml9GYaBllVBCzygfhPWZs6FebS6TDE9lN7wfLvxypy3n+IVR8U1TQ==",
+  "dgSpecHash": "12fv89OeKIfAteNhieIq20Nn/1uWo6MNIZZJQdqXHk3ZLEscasLhKaeH5Ub8RvntKdubTvSwtIYnsBUuKKQm/g==",
   "success": true,
   "projectFilePath": "D:\\6-Programming and courses\\New Projects\\Asp.net Core\\HotelListing\\HotelListing\\HotelListing.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\zakaw\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\zakaw\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\zakaw\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\zakaw\\.nuget\\packages\\jetbrains.annotations\\2022.1.0\\jetbrains.annotations.2022.1.0.nupkg.sha512",
     "C:\\Users\\zakaw\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\zakaw\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\zakaw\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
@@ -149,7 +150,9 @@
     "C:\\Users\\zakaw\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\zakaw\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\zakaw\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\zakaw\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\zakaw\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\zakaw\\.nuget\\packages\\x.pagedlist\\8.4.3\\x.pagedlist.8.4.3.nupkg.sha512",
+    "C:\\Users\\zakaw\\.nuget\\packages\\x.pagedlist.mvc.core\\8.4.3\\x.pagedlist.mvc.core.8.4.3.nupkg.sha512"
   ],
   "logs": []
 }

@@ -30,10 +30,10 @@ namespace HotelListing.APIs
 
         // GET: api/<CountryApiController>
         [HttpGet]
-        public async Task<IActionResult> GetAllCountries()
+        public async Task<IActionResult> GetAllCountries([FromQuery] RequestParams requestParams)
         {
             try {
-                var countries = await _countryServices.GetAllCountriesAsync();
+                var countries = await _countryServices.GetAllCountriesAsync(requestParams);
                 return Ok(_mapper.Map<List<CountryDTO>>(countries));
             }
             catch (Exception ex)

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HotelListing.Models;
+using X.PagedList;
 
 namespace HotelListing.Interfaces
 {
     public interface IHotelServices
     {
-        public List<Hotel> GetAllHotels();     
-        public Task<List<Hotel>> GetAllHotelsAsync();
+        public IEnumerable<Hotel> GetAllHotels();     
+        public Task<IEnumerable<Hotel>> GetAllHotelsAsync();
+        public Task<IPagedList<Hotel>> GetAllHotelsAsync(RequestParams requestParams);
 
 
         public Hotel GetHotelById(int id);

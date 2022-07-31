@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HotelListing.Interfaces;
 using HotelListing.Models;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 
 namespace HotelListing.Business_Services
 {
@@ -29,6 +30,11 @@ namespace HotelListing.Business_Services
             return  await _context.countries.Include(h => h.hotels).ToListAsync();
         }
 
+
+        public async Task<IPagedList<Country>> GetAllCountriesAsync(RequestParams requestParams)
+        {
+            return await _context.countries.Include(h => h.hotels).ToPagedListAsync(requestParams.pageNumber, requestParams.pageSize);
+        }
 
         public Country GetCountryById(int id)
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HotelListing.Interfaces;
 using HotelListing.Models;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 
 namespace HotelListing.Business_Services
 {
@@ -18,14 +19,20 @@ namespace HotelListing.Business_Services
 
         }
 
-        public List<Hotel> GetAllHotels()
+        public IEnumerable<Hotel> GetAllHotels()
         {
             return _context.hotels.ToList();
         }
 
-        public async Task<List<Hotel>> GetAllHotelsAsync()
+        public async Task<IEnumerable<Hotel>> GetAllHotelsAsync()
         {
             return await _context.hotels.ToListAsync();
+        }
+
+
+        public async Task<IPagedList<Hotel>> GetAllHotelsAsync(RequestParams requestParams)
+        {
+            return await _context.hotels.ToPagedListAsync(requestParams.pageNumber, requestParams.pageSize);
         }
 
         public Hotel GetHotelById(int id)
