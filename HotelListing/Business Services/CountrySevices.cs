@@ -23,28 +23,28 @@ namespace HotelListing.Business_Services
         {
             return  _context.countries;
         }
+        
+        public async Task<IEnumerable<Country>> GetAllCountriesAsync()
+        {
+            return  await _context.countries.Include(h => h.hotels).ToListAsync();
+        }
+
 
         public Country GetCountryById(int id)
         {
             return _context.countries.Where(c=>c.countryId==id).FirstOrDefault();
         }
 
-
-
-        // Async Methods Section
-        public async Task<IEnumerable<Country>> GetAllCountriesAsync()
-        {
-            return  await _context.countries.ToListAsync();
-        }
-
+     
         public async Task<Country> GetCountryByIdAsync(int id)
         {
-            return await _context.countries.Where(c => c.countryId == id).FirstOrDefaultAsync();
+            return await _context.countries.Where(c => c.countryId == id).Include(h => h.hotels).FirstOrDefaultAsync();
         }
 
-        public async void AddCountryAsync(Country country)
+
+        public void AddCountry(Country country)
         {
-            await _context.countries.AddAsync(country);
+             _context.countries.Add(country);
             _context.SaveChanges();
         }
 

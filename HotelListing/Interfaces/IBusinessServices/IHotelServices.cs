@@ -8,13 +8,19 @@ namespace HotelListing.Interfaces
 {
     public interface IHotelServices
     {
-        public List<Hotel> GetAllHotels();
+        public List<Hotel> GetAllHotels();     
+        public Task<List<Hotel>> GetAllHotelsAsync();
+
+
         public Hotel GetHotelById(int id);
+        public Task<Hotel> GetHotelByIdAsync(int id);
+
         public List<Hotel> GetCountryHotelsByCountryName(string countryName);
 
-        //Async Methods Section
-        public Task<List<Hotel>> GetAllHotelsAsync();
-        public Task<Hotel> GetHotelByIdAsync(int id);
+
+        public void AddHotel(Hotel hotel);
+        public void UpdateHotel(Hotel hotel);
+        public void DeleteHotel(int id);
 
 
 

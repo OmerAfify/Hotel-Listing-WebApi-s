@@ -76,7 +76,7 @@ namespace HotelListing.APIs
             {
                 var NewCountry = _mapper.Map<Country>(countryDTO);
 
-                _countryServices.AddCountryAsync(NewCountry);
+                _countryServices.AddCountry(NewCountry);
 
                 return CreatedAtRoute("GetCountry", new { id = NewCountry.countryId }, NewCountry);
             }
@@ -124,7 +124,7 @@ namespace HotelListing.APIs
         // Delete : api/<CountryApiController>/id
         [Authorize(Roles = "ADMIN")]
         [HttpDelete("{id:int}")]
-        public IActionResult RemoveCountry(int id)
+        public IActionResult DeleteCountry(int id)
         {
 
             if (!ModelState.IsValid || id < 1)

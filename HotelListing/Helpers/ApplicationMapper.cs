@@ -13,13 +13,24 @@ namespace HotelListing.Helpers
     {
         public ApplicationMapper()
         {
+          
+            //country Mapping
             CreateMap<Country, CountryDTO>().ReverseMap();
 
             CreateMap<Country, CreateCountryDTO>().ReverseMap();
 
             CreateMap<Country, UpdateCountryDTO>().ReverseMap();
 
+
+            //hotel Mapping
             CreateMap<Hotel, HotelDTO>().ReverseMap();
+
+            CreateMap<Hotel, CreateHotelDTO>().ReverseMap();
+
+            CreateMap<Hotel, UpdateHotelDTO>().ReverseMap();
+
+
+            //user Mapping
 
             CreateMap<MyIdentityUser, UserDTO>().ReverseMap();
 

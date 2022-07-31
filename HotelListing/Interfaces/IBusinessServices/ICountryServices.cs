@@ -9,14 +9,12 @@ namespace HotelListing.Interfaces
     public interface ICountryServices
     {
         public IEnumerable<Country> GetAllCountries();
-        public Country GetCountryById(int id);
-
-
-
-        // Async Methods Section
-        public Task<Country> GetCountryByIdAsync(int id);
         public Task<IEnumerable<Country>> GetAllCountriesAsync();
-        public void AddCountryAsync(Country country);
+
+        public Country GetCountryById(int id);
+        public Task<Country> GetCountryByIdAsync(int id);
+
+        public void AddCountry(Country country);
         public void UpdateCountry(Country country);
         public void DeleteCountry(int id);
 

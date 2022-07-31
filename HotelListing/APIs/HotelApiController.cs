@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HotelListing.DTOs;
 using HotelListing.Interfaces;
+using HotelListing.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,8 +44,8 @@ namespace HotelListing.APIs
 
 
         // GET: api/<HotelApiController>/id
-        [HttpGet("{id:int}")]
-        
+        [HttpGet("{id:int}", Name = "GetHotel")]
+
         public async Task<IActionResult> GetHotelById(int id)
         {
             try
@@ -60,11 +62,11 @@ namespace HotelListing.APIs
 
         // GET: api/<HotelApiController>/countryName
         [HttpGet("{countryName}")]
-        public  IActionResult GetAllHotelsInCountry(string countryName)
+        public IActionResult GetAllHotelsInCountry(string countryName)
         {
             try
             {
-                var hotels =  _hotelServices.GetCountryHotelsByCountryName(countryName);
+                var hotels = _hotelServices.GetCountryHotelsByCountryName(countryName);
                 return Ok(_mapper.Map<List<HotelDTO>>(hotels));
             }
             catch (Exception ex)
@@ -74,6 +76,96 @@ namespace HotelListing.APIs
         }
 
 
+
+
+        // POST: api/<HotelApiController>
+        [Authorize(Roles = "ADMIN")]
+        [HttpPost]
+        public IActionResult CreateHotel([FromBody] CreateHotelDTO hotelDTO)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var hotel = _mapper.Map<Hotel>(hotelDTO);
+
+                _hotelServices.AddHotel(hotel);
+
+                return CreatedAtRoute("GetHotel", new { id = hotel.hotelId }, hotel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message + "Internal server error");
+            }
+        }
+
+
+
+
+        // PUT: api/<HotelApiController>
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateHotel([FromBody] UpdateHotelDTO hotelDTO, int id)
+        {
+
+            if (!ModelState.IsValid || id < 1)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var hotel = _hotelServices.GetHotelById(id);
+
+                if (hotel == null)
+                    return BadRequest("Please enter a valid hotel ID");
+
+
+                _mapper.Map(hotelDTO, hotel);
+
+                _hotelServices.UpdateHotel(hotel);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message + "Internal server error");
+            }
+        }
+
+        // Delete: api/<HotelApiController>/id
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteHotel(int id)
+        {
+
+            if (!ModelState.IsValid || id < 1)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var hotel = _hotelServices.GetHotelById(id);
+
+                if (hotel == null)
+                    return BadRequest("Please enter a valid hotel ID");
+
+                _hotelServices.DeleteHotel(id);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message + "Internal server error");
+            }
+        }
 
 
 

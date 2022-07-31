@@ -23,12 +23,25 @@ namespace HotelListing.Business_Services
             return _context.hotels.ToList();
         }
 
+        public async Task<List<Hotel>> GetAllHotelsAsync()
+        {
+            return await _context.hotels.ToListAsync();
+        }
+
         public Hotel GetHotelById(int id)
         {
             return _context.hotels.Where(h => h.hotelId == id).FirstOrDefault();
         }
 
-        public List<Hotel> GetCountryHotelsByCountryName(string countryName) {
+     
+        public async Task<Hotel> GetHotelByIdAsync(int id)
+        {
+            return await _context.hotels.Where(h=>h.hotelId==id).FirstOrDefaultAsync();
+        }
+
+
+        public List<Hotel> GetCountryHotelsByCountryName(string countryName)
+        {
 
             var coutry = _context.countries.Where(c => c.countryName == countryName).FirstOrDefault();
 
@@ -38,23 +51,36 @@ namespace HotelListing.Business_Services
             }
             else
             {
-                 return _context.hotels.Where(c=>c.countryId == coutry.countryId).ToList();
+                return _context.hotels.Where(c => c.countryId == coutry.countryId).ToList();
             }
 
         }
 
-
-        // Async Methods Section
-        public async Task<List<Hotel>> GetAllHotelsAsync()
+        public void AddHotel(Hotel hotel)
         {
-            return await _context.hotels.ToListAsync();
+            _context.hotels.AddAsync(hotel);
+            _context.SaveChanges();
         }
 
-        public async Task<Hotel> GetHotelByIdAsync(int id)
+        public void UpdateHotel(Hotel hotel)
         {
-            return await _context.hotels.Where(h=>h.hotelId==id).FirstOrDefaultAsync();
-        }
+            _context.Attach(hotel);
+            _context.Entry(hotel).State = EntityState.Modified;
+            _context.SaveChanges();
 
-      
+        }
+        
+        public void DeleteHotel(int id)
+        {
+            var hotel = _context.hotels.Where(hotel => hotel.hotelId == id).FirstOrDefault();
+
+            if (hotel == null)
+                return;
+
+            _context.Attach(hotel);
+            _context.Remove(hotel);
+            _context.SaveChanges();
+
+        }
     }
 }
