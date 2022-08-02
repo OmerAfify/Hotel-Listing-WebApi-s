@@ -94,7 +94,7 @@ namespace HotelListing.APIs
         public async Task<IActionResult> LoginWithJWT([FromBody] LoginUserDto userDTO)
         {
 
-            _logger.LogInformation("Registeration attempt for " + userDTO.Email);
+            _logger.LogInformation("Login attempt for " + userDTO.Email);
 
             if (!ModelState.IsValid)
             {
@@ -129,7 +129,7 @@ namespace HotelListing.APIs
         public async Task<IActionResult> Login([FromBody] LoginUserDto userDTO)
         {
 
-            _logger.LogInformation("Registeration attempt for " + userDTO.Email);
+            _logger.LogInformation("Login attempt for " + userDTO.Email);
 
             if (!ModelState.IsValid)
             {

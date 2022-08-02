@@ -5,7 +5,6 @@ D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\HotelListing.runtimeconfig.json
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\HotelListing.runtimeconfig.dev.json
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\HotelListing.dll
-D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\ref\HotelListing.dll
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\HotelListing.pdb
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.OpenApi.dll
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -19,7 +18,6 @@ D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\obj\Debug\net5.0\HotelListing.MvcApplicationPartsAssemblyInfo.cs
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\obj\Debug\net5.0\HotelListing.MvcApplicationPartsAssemblyInfo.cache
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\obj\Debug\net5.0\staticwebassets\HotelListing.StaticWebAssets.Manifest.cache
-D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\obj\Debug\net5.0\staticwebassets\HotelListing.StaticWebAssets.xml
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\obj\Debug\net5.0\scopedcss\bundle\HotelListing.styles.css
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\obj\Debug\net5.0\HotelListing.RazorTargetAssemblyInfo.cache
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\obj\Debug\net5.0\HotelListing.csproj.CopyComplete
@@ -81,3 +79,5 @@ D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\JetBrains.Annotations.dll
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\X.PagedList.dll
 D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\X.PagedList.Mvc.Core.dll
+D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\bin\Debug\net5.0\ref\HotelListing.dll
+D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing\obj\Debug\net5.0\staticwebassets\HotelListing.StaticWebAssets.xml

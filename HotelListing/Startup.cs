@@ -108,7 +108,12 @@ namespace HotelListing
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelListing v1"));
+            app.UseSwaggerUI(c => { 
+                string swaggerJsonBasepath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
+                c.SwaggerEndpoint($"{swaggerJsonBasepath}/swagger/v1/swagger.json", "HotelListingAPI");
+                
+                }) ;
+            
 
             app.UseHttpsRedirection();
 

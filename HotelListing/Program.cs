@@ -17,14 +17,13 @@ namespace HotelListing
         {
             Log.Logger = new LoggerConfiguration().WriteTo.File(
                 path: "D:\\6-Programming and courses\\New Projects\\Asp.net Core\\HotelListing\\HotelListing\\Serilogs\\log-.txt",
-                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message}{NewLine}{Exception}",
                 rollingInterval: RollingInterval.Day,
+                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message}{NewLine}{Exception}",
                 restrictedToMinimumLevel: LogEventLevel.Information
                 ).CreateLogger();
            
  
             try {
-
                 Log.Information("Starting your app");
                 CreateHostBuilder(args).Build().Run(); 
                 } 
