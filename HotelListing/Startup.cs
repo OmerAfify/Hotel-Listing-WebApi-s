@@ -32,6 +32,7 @@ namespace HotelListing
         public void ConfigureServices(IServiceCollection services)
         {
 
+            //Entity Framework
             services.AddDbContext<ApplicationDbContext>
                  (options => options.UseSqlServer(Configuration.GetConnectionString("sqlServerConnection")));
 
@@ -66,13 +67,13 @@ namespace HotelListing
             });
 
 
-            ////cors
-            //services.AddCors(o => {
-            //    o.AddPolicy("AllowAll", builder =>
-            //        builder.AllowAnyOrigin()
-            //        .AllowAnyMethod()
-            //        .AllowAnyHeader());
-            //});
+            //cors policy
+            services.AddCors(o => {
+                o.AddPolicy("AllowAll", builder =>
+                    builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
 
 
             //AutoMapper
@@ -91,7 +92,8 @@ namespace HotelListing
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelListing", Version = "v1" });
             });
 
-            //Controllers + refrence loop handling 
+
+            //Adding Controllers + configuring refrencial loop handling 
             services.AddControllers().AddNewtonsoftJson(op =>
                 op.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore);

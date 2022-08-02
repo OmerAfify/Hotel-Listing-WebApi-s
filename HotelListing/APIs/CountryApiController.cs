@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace HotelListing.APIs
 {
@@ -20,11 +21,13 @@ namespace HotelListing.APIs
     {
         private ICountryServices _countryServices { get; }
         private IMapper _mapper { get; }
+        private ILogger<CountryApiController> _logger { get; }
 
-        public CountryApiController(ICountryServices countryServices, IMapper mapper)
+        public CountryApiController(ICountryServices countryServices, IMapper mapper, ILogger<CountryApiController> logger)
         {
             _countryServices = countryServices;
             _mapper = mapper;
+            _logger = logger;
         }
 
 
@@ -38,6 +41,7 @@ namespace HotelListing.APIs
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"an error occured while accessing {nameof(GetAllCountries)}");
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }
@@ -55,6 +59,7 @@ namespace HotelListing.APIs
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"an error occured while accessing {nameof(GetCountryById)}");
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }
@@ -66,9 +71,10 @@ namespace HotelListing.APIs
         public IActionResult AddCountry([FromBody] CreateCountryDTO countryDTO)
         {
 
-
+        
             if (!ModelState.IsValid)
             {
+                _logger.LogError($"Invalid POST attempt in {nameof(AddCountry)}");
                 return BadRequest(ModelState);
             }
 
@@ -82,6 +88,7 @@ namespace HotelListing.APIs
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"an error occured while accessing {nameof(GetAllCountries)}");
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }
@@ -96,6 +103,7 @@ namespace HotelListing.APIs
 
             if (!ModelState.IsValid || id < 1)
             {
+                _logger.LogError($"Invalid PUT attempt in {nameof(UpdateCountry)}");
                 return BadRequest(ModelState);
             }
 
@@ -116,6 +124,7 @@ namespace HotelListing.APIs
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"an error occured while accessing {nameof(UpdateCountry)}");
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }
@@ -129,6 +138,7 @@ namespace HotelListing.APIs
 
             if (!ModelState.IsValid || id < 1)
             {
+                _logger.LogError($"Invalid DELETE attempt in {nameof(UpdateCountry)}");
                 return BadRequest(ModelState);
             }
 
@@ -148,6 +158,7 @@ namespace HotelListing.APIs
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"an error occured while accessing {nameof(DeleteCountry)}");
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }

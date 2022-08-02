@@ -9,6 +9,7 @@ using HotelListing.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace HotelListing.APIs
 {
@@ -20,10 +21,13 @@ namespace HotelListing.APIs
         private IHotelServices _hotelServices { get; }
         private IMapper _mapper { get; }
 
-        public HotelApiController(IHotelServices hotelServices, IMapper mapper)
+        private ILogger<HotelApiController> _logger { get; }
+
+        public HotelApiController(IHotelServices hotelServices, IMapper mapper, ILogger<HotelApiController> logger)
         {
             _hotelServices = hotelServices;
             _mapper = mapper;
+            _logger = logger;
         }
 
 
@@ -38,6 +42,7 @@ namespace HotelListing.APIs
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"an error occured while accessing {nameof(GetAllHotels)}");
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }
@@ -55,6 +60,7 @@ namespace HotelListing.APIs
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"an error occured while accessing {nameof(GetHotelById)}");
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }
@@ -81,11 +87,12 @@ namespace HotelListing.APIs
         // POST: api/<HotelApiController>
         [Authorize(Roles = "ADMIN")]
         [HttpPost]
-        public IActionResult CreateHotel([FromBody] CreateHotelDTO hotelDTO)
+        public IActionResult AddHotel([FromBody] CreateHotelDTO hotelDTO)
         {
 
             if (!ModelState.IsValid)
             {
+                _logger.LogError($"Invalid POST attempt in {nameof(AddHotel)}");
                 return BadRequest(ModelState);
             }
 
@@ -99,6 +106,7 @@ namespace HotelListing.APIs
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"an error occured while accessing {nameof(AddHotel)}");
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }
@@ -115,6 +123,7 @@ namespace HotelListing.APIs
 
             if (!ModelState.IsValid || id < 1)
             {
+                _logger.LogError($"Invalid PUT attempt in {nameof(UpdateHotel)}");
                 return BadRequest(ModelState);
             }
 
@@ -134,6 +143,7 @@ namespace HotelListing.APIs
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"an error occured while accessing {nameof(UpdateHotel)}");
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }
@@ -147,6 +157,7 @@ namespace HotelListing.APIs
 
             if (!ModelState.IsValid || id < 1)
             {
+                _logger.LogError($"Invalid POST attempt in {nameof(DeleteHotel)}");
                 return BadRequest(ModelState);
             }
 
@@ -163,6 +174,7 @@ namespace HotelListing.APIs
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"an error occured while accessing {nameof(DeleteHotel)}");
                 return StatusCode(500, ex.Message + "Internal server error");
             }
         }

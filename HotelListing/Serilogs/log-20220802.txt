@@ -1,0 +1,45 @@
+[11:18:31 INF] Starting your app
+[11:18:33 INF] User profile is available. Using '"C:\Users\zakaw\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[11:18:34 INF] Application started. Press Ctrl+C to shut down.
+[11:18:34 INF] Hosting environment: "Development"
+[11:18:34 INF] Content root path: "D:\6-Programming and courses\New Projects\Asp.net Core\HotelListing\HotelListing"
+[11:18:35 INF] Request starting HTTP/2 GET https://localhost:44387/swagger/v1/swagger.json - -
+[11:18:35 INF] Request starting HTTP/2 GET https://localhost:44387/swagger/index.html - -
+[11:18:35 INF] Request finished HTTP/2 GET https://localhost:44387/swagger/index.html - - - 200 - text/html;charset=utf-8 440.8881ms
+[11:18:35 INF] Request finished HTTP/2 GET https://localhost:44387/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 468.1484ms
+[11:18:36 INF] Request starting HTTP/2 GET https://localhost:44387/swagger/v1/swagger.json - -
+[11:18:36 INF] Request finished HTTP/2 GET https://localhost:44387/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 15.2140ms
+[11:19:14 INF] Request starting HTTP/2 POST https://localhost:44387/api/UserApi/loginWithJWT application/json-patch+json 67
+[11:19:14 INF] CORS policy execution successful.
+[11:19:14 INF] Executing endpoint '"HotelListing.APIs.UserApiController.LoginWithJWT (HotelListing)"'
+[11:19:14 INF] Route matched with "{action = \"LoginWithJWT\", controller = \"UserApi\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginWithJWT(HotelListing.DTOs.LoginUserDto)" on controller "HotelListing.APIs.UserApiController" ("HotelListing").
+[11:19:17 INF] Registeration attempt for omar@gmail.com
+[11:19:19 INF] Entity Framework Core "5.0.0" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+[11:19:22 INF] Executed DbCommand ("138"ms) [Parameters=["@__normalizedUserName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName], [a].[firstName], [a].[lastName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0"
+[11:19:23 INF] Executed DbCommand ("20"ms) [Parameters=["@__userId_0='?' (Size = 450)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0"
+[11:19:23 INF] Executing "AcceptedResult", writing value of type '"<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[11:19:23 INF] Executed action "HotelListing.APIs.UserApiController.LoginWithJWT (HotelListing)" in 9117.8126ms
+[11:19:23 INF] Executed endpoint '"HotelListing.APIs.UserApiController.LoginWithJWT (HotelListing)"'
+[11:19:23 INF] Request finished HTTP/2 POST https://localhost:44387/api/UserApi/loginWithJWT application/json-patch+json 67 - 202 285 application/json;+charset=utf-8 9597.9113ms
+[11:19:38 INF] Request starting HTTP/2 POST https://localhost:44387/api/UserApi/loginWithJWT application/json-patch+json 57
+[11:19:38 INF] CORS policy execution successful.
+[11:19:38 INF] Executing endpoint '"HotelListing.APIs.UserApiController.LoginWithJWT (HotelListing)"'
+[11:19:38 INF] Route matched with "{action = \"LoginWithJWT\", controller = \"UserApi\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginWithJWT(HotelListing.DTOs.LoginUserDto)" on controller "HotelListing.APIs.UserApiController" ("HotelListing").
+[11:19:38 INF] Registeration attempt for ali@gmail.com
+[11:19:38 INF] Entity Framework Core "5.0.0" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+[11:19:38 INF] Executed DbCommand ("7"ms) [Parameters=["@__normalizedUserName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName], [a].[firstName], [a].[lastName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0"
+[11:19:38 WRN] Invalid password for user.
+[11:19:38 INF] Executing "UnauthorizedObjectResult", writing value of type '"HotelListing.DTOs.LoginUserDto"'.
+[11:19:38 INF] Executed action "HotelListing.APIs.UserApiController.LoginWithJWT (HotelListing)" in 178.9652ms
+[11:19:38 INF] Executed endpoint '"HotelListing.APIs.UserApiController.LoginWithJWT (HotelListing)"'
+[11:19:38 INF] Request finished HTTP/2 POST https://localhost:44387/api/UserApi/loginWithJWT application/json-patch+json 57 - 401 48 application/json;+charset=utf-8 187.6331ms
